@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.wx.mapper.CategoryMapper">
+	<insert id="add" parameterType="Category">
+		insert into t_category ( id, name ) values ( #{id}, #{name} )
+	</insert>
+
+	<delete id="delete" parameterType="Category">
+		delete from t_category where id = #{id}
+	</delete>
+
+	<select id="get" parameterType="Category" resultType="Category">
+		select * from t_category
+		<where>
+			<if test="id != null and id != ''">
+				and id like '%'||#{id}||'%'
+			</if>
+			<if test="name != null and name != ''">
+				and name like '%'||#{name}||'%'
+			</if>
+		</where>
+	</select>
+
+	<update id="update" parameterType="Category">
+		update t_category set name = #{name} where id = #{id}
+	</update>
+	
+	<select id="list" resultType="Category">
+		select * from t_category
+	</select>
+	
+	<select id="check" parameterType="String" resultType="int">
+		select count(1) from t_category
+		<where>
+			<if test="_parameter != null and _parameter != ''">
+				and id = #{id}
+			</if>
+		</where>
+	</select>
+</mapper>
+
